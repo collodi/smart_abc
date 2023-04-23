@@ -1,0 +1,25 @@
+name: smart_abc
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=2.19.6 <3.0.0'
+
+dependencies:
+  firebase_auth: ^4.4.2
+  firebase_core: ^2.10.0
+  firebase_database: ^10.1.1
+  google_sign_in: ^5.0.0
+  flutter_datetime_picker: ^1.5.1
+  flutter:
+    sdk: flutter
+  cloud_firestore: ^4.5.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
