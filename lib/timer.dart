@@ -64,7 +64,7 @@ class _TimerControlViewState extends State<TimerControlView> {
             );
           },
         ),
-        const Padding(padding: EdgeInsets.all(10)),
+        const Padding(padding: EdgeInsets.all(20)),
         const Text("Display Mode"),
         DropdownButton<TimerDisplayState>(
           items: states,
@@ -77,7 +77,7 @@ class _TimerControlViewState extends State<TimerControlView> {
             });
           },
         ),
-        const Padding(padding: EdgeInsets.all(10)),
+        const Padding(padding: EdgeInsets.all(20)),
         displayState(),
       ],
     );
