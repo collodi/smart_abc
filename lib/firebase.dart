@@ -6,7 +6,7 @@ import 'firebase_options.dart';
 
 late final FirebaseApp app;
 late final FirebaseAuth auth;
-late final FirebaseFirestore db;
+late final FirebaseDatabase db;
 
 Future<void> initializeFirebase() async {
   app = await Firebase.initializeApp(
@@ -14,5 +14,5 @@ Future<void> initializeFirebase() async {
   );
 
   auth = FirebaseAuth.instanceFor(app: app);
-  db = FirebaseFirestore.instanceFor(app: app);
+  db = FirebaseDatabase.instanceFor(app: app);
 }

@@ -5,18 +5,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'firebase.dart';
 import 'timer.dart';
 
-// FIXME something wrong with the auth
-// FIXME can't even write to firestore (gives errors tho)
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initializeFirebase();
-
-  auth.authStateChanges().listen((user) {
-    print('auth state change');
-    print('user user: $user');
-  });
   runApp(const MainApp());
 }
 
@@ -30,7 +22,24 @@ Future<UserCredential> signInWithGoogle() async {
     idToken: googleAuth?.idToken,
   );
 
-  return await FirebaseAuth.instance.signInWithCredential(credential);
+  return await auth.signInWithCredential(credential);
+}
+
+Future<void> addUserToFirestore() async {
+  if (auth.currentUser == null) {
+    return;
+  }
+
+  final uid = auth.currentUser!.uid;
+  final doc = db.ref('/users/$uid');
+  final snap = await doc.get();
+  if (!snap.exists) {
+    await doc.set({
+      'uid': uid,
+      'displayName': auth.currentUser!.displayName,
+      'priv': 0,
+    });
+  }
 }
 
 class MainApp extends StatelessWidget {
@@ -44,9 +53,9 @@ class MainApp extends StatelessWidget {
           body: StreamBuilder<User?>(
             stream: auth.authStateChanges(),
             builder: (context, snapshot) {
-              print('User: ${snapshot.data}');
               if (snapshot.hasData) {
-                return Home();
+                addUserToFirestore();
+                return const Home();
               }
 
               return const Login();
@@ -79,12 +88,7 @@ class _LoginState extends State<Login> {
                 error = null;
               });
 
-              await signInWithGoogle().then((value) {
-                print(value);
-              }).catchError((err) {
-                print(err);
-              });
-              // TODO when successful, make/check a user entry in firestore
+              await signInWithGoogle();
             } on FirebaseAuthException catch (e) {
               setState(() {
                 error = e.message;
@@ -99,11 +103,6 @@ class _LoginState extends State<Login> {
   }
 }
 
-const states = [
-  DropdownMenuItem(value: TimerState.clock, child: Text('Clock')),
-  DropdownMenuItem(value: TimerState.timer, child: Text('Timer')),
-];
-
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -112,23 +111,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  TimerState? state;
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        DropdownButton<TimerState>(
-          items: states,
-          value: state,
-          onChanged: (val) {
-            setState(() {
-              state = val;
-            });
-          },
-        ),
-        TimerControlView(state),
-      ],
+    return const Padding(
+      padding: EdgeInsets.all(30),
+      child: TimerControlView(),
     );
   }
 }
