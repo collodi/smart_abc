@@ -13,7 +13,10 @@ Future<void> main() async {
 }
 
 Future<UserCredential> signInWithGoogle() async {
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  final GoogleSignInAccount? googleUser = await GoogleSignIn(
+          clientId:
+              '134790081856-fn804ibqandel75i25oe5ien0vuihtrm.apps.googleusercontent.com')
+      .signIn();
   final GoogleSignInAuthentication? googleAuth =
       await googleUser?.authentication;
 

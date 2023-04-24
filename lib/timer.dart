@@ -64,13 +64,15 @@ class _TimerControlViewState extends State<TimerControlView> {
 }
 
 String getHexString(int num, int nBytes) {
-  ByteData bytes = ByteData(8);
-  bytes.setInt64(0, num, Endian.little);
+  String hexstr = BigInt.from(num)
+      .toUnsigned(8 * nBytes)
+      .toRadixString(16)
+      .padLeft(2 * nBytes, '0');
 
   String res = '';
-  bytes.buffer.asUint8List(0, nBytes).forEach((element) {
-    res += element.toRadixString(16).padLeft(2, '0');
-  });
+  for (int i = 0; i < hexstr.length; i += 2) {
+    res = hexstr.substring(i, i + 2) + res;
+  }
 
   return res;
 }
@@ -87,7 +89,10 @@ class ClockState extends StatelessWidget {
           onPressed: () {
             int offset = DateTime.now().timeZoneOffset.inSeconds;
             String stateString = 'CLOCK${getHexString(offset, 4)}';
-            db.ref('/bigtimer/state').set(stateString).catchError((e) {
+            db.ref('/bigtimer/state').set(stateString).then((_) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("clock successfully shown")));
+            }).catchError((e) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(e.toString())));
             });
@@ -108,8 +113,8 @@ class TimerState extends StatefulWidget {
 
 class _TimerStateState extends State<TimerState> {
   late DateTime start;
-  int duration = 0;
-  int transition = 0;
+  int duration = 4 * 60;
+  int transition = 5;
   String? error;
 
   @override
@@ -151,7 +156,7 @@ class _TimerStateState extends State<TimerState> {
           style: TextStyle(fontSize: 20),
         ),
         DurationPicker(
-          initialValue: 4 * 60,
+          initialValue: duration,
           textStyle: const TextStyle(fontSize: 20),
           onChanged: (n) {
             duration = n;
@@ -163,7 +168,7 @@ class _TimerStateState extends State<TimerState> {
           style: TextStyle(fontSize: 20),
         ),
         DurationPicker(
-          initialValue: 5,
+          initialValue: transition,
           textStyle: const TextStyle(fontSize: 20),
           onChanged: (n) {
             transition = n;
@@ -178,7 +183,10 @@ class _TimerStateState extends State<TimerState> {
                 getHexString(transition, 8);
             String stateString = 'TIMER$hexbytes';
 
-            db.ref('/bigtimer/state').set(stateString).catchError((e) {
+            db.ref('/bigtimer/state').set(stateString).then((_) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("timer successfully started")));
+            }).catchError((e) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(e.toString())));
             });
