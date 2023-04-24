@@ -79,26 +79,36 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ElevatedButton(
-          onPressed: () async {
-            try {
-              setState(() {
-                error = null;
-              });
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  setState(() {
+                    error = null;
+                  });
 
-              await signInWithGoogle();
-            } on FirebaseAuthException catch (e) {
-              setState(() {
-                error = e.message;
-              });
-            }
-          },
-          child: const Text('Log In With Google'),
+                  await signInWithGoogle();
+                } on FirebaseAuthException catch (e) {
+                  setState(() {
+                    error = e.message;
+                  });
+                }
+              },
+              child: const Text('Log In With Google'),
+            ),
+            const Padding(padding: EdgeInsets.all(10)),
+            Text(
+              error ?? '',
+              style: const TextStyle(fontSize: 20),
+            ),
+          ],
         ),
-        Text(error ?? ''),
-      ],
+      ),
     );
   }
 }
