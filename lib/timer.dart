@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -43,6 +44,27 @@ class _TimerControlViewState extends State<TimerControlView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        StreamBuilder(
+          stream: db.ref('/bigtimer').onValue,
+          builder: (context, event) {
+            if (!event.hasData) {
+              return const Text("Timer hasn't been used in a while.");
+            }
+
+            final data = event.data!.snapshot;
+            final lastUsedTime = DateTime.fromMillisecondsSinceEpoch(
+                data.child('last_used').value as int);
+            final lastUsedName = data.child('last_used_name').value as String;
+
+            String lastUsedTimeString = lastUsedTime.toString();
+            lastUsedTimeString =
+                lastUsedTimeString.substring(0, lastUsedTimeString.length - 7);
+            return Text(
+              'Last used at $lastUsedTimeString by $lastUsedName',
+            );
+          },
+        ),
+        const Padding(padding: EdgeInsets.all(10)),
         const Text("Display Mode"),
         DropdownButton<TimerDisplayState>(
           items: states,
@@ -88,7 +110,14 @@ class ClockState extends StatelessWidget {
           onPressed: () {
             int offset = DateTime.now().timeZoneOffset.inSeconds;
             String stateString = 'CLOCK${getHexString(offset, 4)}';
-            db.ref('/bigtimer/state').set(stateString).then((_) {
+
+            Map<String, Object?> updates = {};
+            updates['bigtimer/state'] = stateString;
+            updates['bigtimer/last_used'] = ServerValue.timestamp;
+            updates['bigtimer/last_used_name'] =
+                auth.currentUser?.displayName ?? 'Unknown user';
+
+            db.ref().update(updates).then((_) {
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("clock successfully shown")));
             }).catchError((e) {
@@ -131,7 +160,7 @@ class _TimerStateState extends State<TimerState> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Today at ${start.hour}:${start.minute.toString().padLeft(2, "0")}',
+          'Start today at ${start.hour}:${start.minute.toString().padLeft(2, "0")}',
           style: const TextStyle(fontSize: 20),
         ),
         ElevatedButton(
@@ -182,7 +211,13 @@ class _TimerStateState extends State<TimerState> {
                 getHexString(transition, 8);
             String stateString = 'TIMER$hexbytes';
 
-            db.ref('/bigtimer/state').set(stateString).then((_) {
+            Map<String, Object?> updates = {};
+            updates['bigtimer/state'] = stateString;
+            updates['bigtimer/last_used'] = ServerValue.timestamp;
+            updates['bigtimer/last_used_name'] =
+                auth.currentUser?.displayName ?? 'Unknown user';
+
+            db.ref().update(updates).then((_) {
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text("timer successfully started")));
             }).catchError((e) {
