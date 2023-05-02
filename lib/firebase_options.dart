@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC95vjpuIXIM84nDuJtGF-ovrg-r8fPtYI',
-    appId: '1:134790081856:android:86a7cd8ce297bbf8029ea5',
+    appId: '1:134790081856:android:fb43b1413e48f78a029ea5',
     messagingSenderId: '134790081856',
     projectId: 'smart-abc-1893a',
     databaseURL: 'https://smart-abc-1893a-default-rtdb.firebaseio.com',
@@ -64,25 +64,25 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCg3ef1pcFLDwXS1T6FUClIfAyi2WRrlEI',
-    appId: '1:134790081856:ios:cc3a3c7b301cf21a029ea5',
+    appId: '1:134790081856:ios:14bf6c4dc73faaf6029ea5',
     messagingSenderId: '134790081856',
     projectId: 'smart-abc-1893a',
     databaseURL: 'https://smart-abc-1893a-default-rtdb.firebaseio.com',
     storageBucket: 'smart-abc-1893a.appspot.com',
     androidClientId: '134790081856-j1tmtdglpueioganh8le4plo81jg7ofc.apps.googleusercontent.com',
     iosClientId: '134790081856-f3p5r171pg0p47m1fomdipn199eo7df1.apps.googleusercontent.com',
-    iosBundleId: 'com.example.smartAbc',
+    iosBundleId: 'kim.willy.smartAbc',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCg3ef1pcFLDwXS1T6FUClIfAyi2WRrlEI',
-    appId: '1:134790081856:ios:cc3a3c7b301cf21a029ea5',
+    appId: '1:134790081856:ios:14bf6c4dc73faaf6029ea5',
     messagingSenderId: '134790081856',
     projectId: 'smart-abc-1893a',
     databaseURL: 'https://smart-abc-1893a-default-rtdb.firebaseio.com',
     storageBucket: 'smart-abc-1893a.appspot.com',
     androidClientId: '134790081856-j1tmtdglpueioganh8le4plo81jg7ofc.apps.googleusercontent.com',
     iosClientId: '134790081856-f3p5r171pg0p47m1fomdipn199eo7df1.apps.googleusercontent.com',
-    iosBundleId: 'com.example.smartAbc',
+    iosBundleId: 'kim.willy.smartAbc',
   );
 }

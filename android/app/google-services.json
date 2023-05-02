@@ -15,13 +15,41 @@
       },
       "oauth_client": [
         {
-          "client_id": "134790081856-j1tmtdglpueioganh8le4plo81jg7ofc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.smart_abc",
-            "certificate_hash": "3c6ed4a2a156ed6988b28e662d36de0597cec393"
-          }
-        },
+          "client_id": "134790081856-fn804ibqandel75i25oe5ien0vuihtrm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC95vjpuIXIM84nDuJtGF-ovrg-r8fPtYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "134790081856-fn804ibqandel75i25oe5ien0vuihtrm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "134790081856-f3p5r171pg0p47m1fomdipn199eo7df1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "kim.willy.smartAbc"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134790081856:android:fb43b1413e48f78a029ea5",
+        "android_client_info": {
+          "package_name": "kim.willy.smart_abc"
+        }
+      },
+      "oauth_client": [
         {
           "client_id": "134790081856-fn804ibqandel75i25oe5ien0vuihtrm.apps.googleusercontent.com",
           "client_type": 3
@@ -36,14 +64,14 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "134790081856-dfbnrvprjfsfm9fp378gk9r2sdkk0711.apps.googleusercontent.com",
+              "client_id": "134790081856-fn804ibqandel75i25oe5ien0vuihtrm.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "134790081856-88ui7qacrgaoumai85ct2prnqkiq478p.apps.googleusercontent.com",
+              "client_id": "134790081856-f3p5r171pg0p47m1fomdipn199eo7df1.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.bigTimerApp"
+                "bundle_id": "kim.willy.smartAbc"
               }
             }
           ]

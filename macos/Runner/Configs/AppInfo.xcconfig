@@ -8,7 +8,7 @@
 PRODUCT_NAME = smart_abc
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.smartAbc
+PRODUCT_BUNDLE_IDENTIFIER = kim.willy.smartAbc
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 Willy Kim. All rights reserved.
